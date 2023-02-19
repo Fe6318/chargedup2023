@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,7 +9,7 @@ public class Drive extends CommandBase {
   private DriveTrain driveTrain;
   private Joystick driver;
   
-  public Drive(DriveTrain driveTrain, Joystick driver) {
+  public Drive(DriveTrain driveTrain, Joystick driver){
     this.driveTrain = driveTrain;
     addRequirements(driveTrain);
     this.driver = driver;
@@ -21,7 +17,7 @@ public class Drive extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize(){}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -29,6 +25,8 @@ public class Drive extends CommandBase {
     double x = driver.getRawAxis(Constants.forward);
     double x2 = driver.getRawAxis(Constants.backward);
     double z = driver.getRawAxis(Constants.turn);
+
+    // cubing z to make turns less jarring
     double z2 = Math.pow(z, 3);
     driveTrain.Drive((x-x2),z2);
   }

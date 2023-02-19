@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Clamp;
 
 public class ManualClamp extends CommandBase {
@@ -21,8 +22,8 @@ public class ManualClamp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    double x = operator.getRawAxis(0);
-    double x2 = operator.getRawAxis(0);
+    double x = operator.getRawAxis(Constants.clampIn);
+    double x2 = operator.getRawAxis(Constants.clampOut);
     clamp.Move(x-x2);
   }
 

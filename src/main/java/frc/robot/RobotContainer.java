@@ -1,14 +1,12 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.ClampCone;
 import frc.robot.commands.ClampCube;
 import frc.robot.commands.Drive;
+import frc.robot.commands.ManualArm;
 import frc.robot.commands.ManualClamp;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Clamp;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,32 +26,43 @@ public class RobotContainer {
   // joysticks
   private static Joystick driver;
   private static Joystick operator;
+
+  // joystick buttons
   private static JoystickButton clampInButton;
   private static JoystickButton clampOutButton;
 
   // subsystems
-  private static Clamp clamp;
   private static DriveTrain driveTrain;
+  private static Clamp clamp;
+  private static Arm arm;
 
   // commands
   private static ClampCone clampCone;
   private static ClampCube clampCube;
   private static Drive drive;
   private static ManualClamp manualClamp;
+  private static ManualArm manualArm;
 
   // auto commands
   private static AutoDrive autoDrive;
   
   public RobotContainer() {
-    // initialize variables
+    // controllers
     driver = new Joystick(0);
     operator = new Joystick(1);
+
+    // subsytems
     clamp = new Clamp();
     driveTrain = new DriveTrain();
+    arm = new Arm();
+
+    // commands
+    drive = new Drive(driveTrain, driver);
     clampCone = new ClampCone(clamp);
     clampCube = new ClampCube(clamp);
-    drive = new Drive(driveTrain, driver);
     manualClamp = new ManualClamp(clamp, operator);
+    manualArm = new ManualArm(arm, operator);
+    //manualArm = new ManualArm(arm);
     
     // clamp buttons
     clampInButton = new JoystickButton(operator, Constants.clampIn);
@@ -61,7 +70,8 @@ public class RobotContainer {
 
     // set default commands
     driveTrain.setDefaultCommand(drive);
-    clamp.setDefaultCommand(clampCone);
+    clamp.setDefaultCommand(manualClamp);
+    arm.setDefaultCommand(manualArm);
 
     // auto
     autoDrive = new AutoDrive(driveTrain,4);
@@ -80,7 +90,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    clampInButton.whileTrue(new ClampCone(clamp));
+    //clampInButton.whileTrue(new ClampCone(clamp));
   }
 
   /**

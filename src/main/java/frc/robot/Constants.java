@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 /**
@@ -12,12 +8,25 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
+  // driver buttons
   public static final int forward = 3;
   public static final int backward = 2;
   public static final int turn = 0;
-  public static final int clampIn = 1;
-  public static final int clampOut = 2;
-   
+
+  // operator buttons
+  // clamp
+  // right open left close
+  // might have to switch if opposite
+  public static final int clampIn = 2;
+  public static final int clampOut = 3;
+
+  // arm
+  // trigger
+  public static final int armUp = 2;
+  // joystick
+  //public static final int armUp = 1;
+
 }
 

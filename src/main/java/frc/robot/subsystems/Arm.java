@@ -1,17 +1,18 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Arm extends SubsystemBase { 
-  private CANSparkMax armMotor;
+  private VictorSPX armMotor;
   public Arm(){
-    armMotor = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushed);
+    armMotor = new VictorSPX(10);
   }
 
   public void Move(double speed){
-    armMotor.set(speed);
+    armMotor.set(ControlMode.PercentOutput,speed);
   }
   
   @Override

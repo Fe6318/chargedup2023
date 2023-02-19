@@ -1,17 +1,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Clamp extends SubsystemBase {
-  private CANSparkMax clampMotor;
+  private TalonSRX clampMotor;
   public Clamp(){
-    clampMotor = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushed);
+    clampMotor = new TalonSRX(0);
   }
 
   public void Move(double speed){
-    clampMotor.set(speed);
+    clampMotor.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

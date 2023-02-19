@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -11,6 +7,7 @@ import frc.robot.subsystems.Clamp;
 public class ReleaseCube extends CommandBase {
   private Clamp clamp;
   private Timer timer;
+  
   public ReleaseCube(Clamp clamp){
     this.clamp = clamp;
     timer = new Timer();
