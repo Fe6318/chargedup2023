@@ -1,16 +1,20 @@
 package frc.robot;
 
 import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutoRaiseArm;
 import frc.robot.commands.ClampCone;
 import frc.robot.commands.ClampCube;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ManualArm;
 import frc.robot.commands.ManualClamp;
+import frc.robot.commands.ReleaseCube;
+import frc.robot.commands.ReleaseCone;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Clamp;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -28,8 +32,10 @@ public class RobotContainer {
   private static Joystick operator;
 
   // joystick buttons
-  private static JoystickButton clampInButton;
-  private static JoystickButton clampOutButton;
+  private static JoystickButton clampInConeButton;
+  private static JoystickButton clampOutConeButton;
+  private static JoystickButton clampInCubeButton;
+  private static JoystickButton clampOutCubeButton;
 
   // subsystems
   private static DriveTrain driveTrain;
@@ -39,12 +45,16 @@ public class RobotContainer {
   // commands
   private static ClampCone clampCone;
   private static ClampCube clampCube;
+  private static ReleaseCone releaseCone;
+  private static ReleaseCube releaseCube;
   private static Drive drive;
   private static ManualClamp manualClamp;
   private static ManualArm manualArm;
 
   // auto commands
   private static AutoDrive autoDrive;
+  private static AutoRaiseArm autoRaiseArm;
+  private static SequentialCommandGroup autonomous;
   
   public RobotContainer() {
     // controllers
@@ -60,13 +70,17 @@ public class RobotContainer {
     drive = new Drive(driveTrain, driver);
     clampCone = new ClampCone(clamp);
     clampCube = new ClampCube(clamp);
+    releaseCone = new ReleaseCone(clamp);
+    releaseCube = new ReleaseCube(clamp);
     manualClamp = new ManualClamp(clamp, operator);
     manualArm = new ManualArm(arm, operator);
     //manualArm = new ManualArm(arm);
     
-    // clamp buttons
-    clampInButton = new JoystickButton(operator, Constants.clampIn);
-    clampOutButton = new JoystickButton(operator, Constants.clampOut);
+    // non manual clamp buttons
+    clampInConeButton = new JoystickButton(operator, Constants.clampConeIn);
+    clampOutConeButton = new JoystickButton(operator, Constants.clampConeOut);
+    clampInCubeButton = new JoystickButton(operator, Constants.clampCubeIn);
+    clampOutCubeButton = new JoystickButton(operator, Constants.clampCubeOut);
 
     // set default commands
     driveTrain.setDefaultCommand(drive);
@@ -75,6 +89,9 @@ public class RobotContainer {
 
     // auto
     autoDrive = new AutoDrive(driveTrain,4);
+    autoRaiseArm = new AutoRaiseArm(arm,2);
+    // ex parallelCommand = new ParallelCommandGroup(autoDrive, autoRaiseArm);
+    autonomous = new SequentialCommandGroup(autoDrive, autoRaiseArm);
 
     // configure button bindings
     configureBindings();
@@ -90,7 +107,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //clampInButton.whileTrue(new ClampCone(clamp));
+    clampInConeButton.onTrue(clampCone);
+    clampOutConeButton.onTrue(releaseCone);
+    clampInCubeButton.onTrue(clampCube);
+    clampOutCubeButton.onTrue(releaseCube);
   }
 
   /**
@@ -99,6 +119,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    /* autonomous idea: push cube in lower shelf, back up while flipping arm, and possibly
+    make it to charging station */  
     return autoDrive;
+    //return autonomous;
   }
 }

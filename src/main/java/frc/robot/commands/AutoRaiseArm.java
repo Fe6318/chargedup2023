@@ -1,42 +1,46 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-public class ManualArm extends CommandBase {
+public class AutoRaiseArm extends CommandBase {
   private Arm arm;
-  private Joystick operator;
+  private Timer timer;
+  private double time;
 
-  public ManualArm(Arm arm, Joystick operator) {
+  public AutoRaiseArm(Arm arm, double time) {
     this.arm = arm;
     addRequirements(arm);
-    this.operator = operator;
+    this.time = time;
+    timer = new Timer();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize(){
-
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    double x = operator.getRawAxis(Constants.armUp);
-    arm.Move(-x);
+    arm.Move(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted){
+    arm.Move(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(timer.get() > time){
+      return true;
+    }
     return false;
   }
 }

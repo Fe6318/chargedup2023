@@ -17,15 +17,21 @@ public final class Constants {
 
   // operator buttons
   // clamp
-  // right open left close
-  // might have to switch if opposite
-  public static final int clampIn = 2;
-  public static final int clampOut = 3;
+  // manual
+  // top triggers, left open, right close
+  public static final int clampIn = 5;
+  public static final int clampOut = 6;
+  // non manual
+  // x = cone in, y = cone out, a = cube in, b = cube out
+  public static final int clampConeIn = 3;
+  public static final int clampConeOut = 4;
+  public static final int clampCubeIn = 1;
+  public static final int clampCubeOut = 2;
 
   // arm
-  // trigger
+  // left or right idk trigger
   public static final int armUp = 2;
-  // joystick
+  // i think left joystick
   //public static final int armUp = 1;
 
 }
