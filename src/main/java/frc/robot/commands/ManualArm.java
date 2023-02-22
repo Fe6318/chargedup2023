@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
@@ -29,6 +30,9 @@ public class ManualArm extends CommandBase {
   @Override
   public void execute(){
     double x = operator.getRawAxis(Constants.armUp);
+    SmartDashboard.putNumber("operator", x);
+    SmartDashboard.putNumber("timer", timer.get());
+    SmartDashboard.putBoolean("boolean", hasMoved);
     // if trigger pressed
     if(x < .1){
       // check if trigger moved
@@ -38,8 +42,8 @@ public class ManualArm extends CommandBase {
         hasMoved = false;
       }
       // slows arm if timer is less than 2 seconds
-      if(timer.get() < 2){
-        arm.Move(.1);
+      if(timer.get() < 2 && timer.get() != 0){
+        arm.Move(.05);
       }
       // otherwise timer and arm stop
       else{
@@ -51,6 +55,7 @@ public class ManualArm extends CommandBase {
     // otherwise arm moves like normal
     else{
       arm.Move(x*.5);
+      hasMoved = true;
     }
   }
 

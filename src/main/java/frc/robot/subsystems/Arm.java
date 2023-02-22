@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -16,6 +17,7 @@ public class Arm extends SubsystemBase {
   public void Move(double speed){
     //armMotor.set(ControlMode.PercentOutput,speed);
     armMotor.set(speed);
+    SmartDashboard.putNumber("speed", speed);
   }
   
   @Override
