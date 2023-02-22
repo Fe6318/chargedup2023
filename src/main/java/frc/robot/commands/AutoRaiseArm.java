@@ -26,7 +26,7 @@ public class AutoRaiseArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    arm.Move(1);
+    arm.Move(.5);
   }
 
   // Called once the command ends or is interrupted.

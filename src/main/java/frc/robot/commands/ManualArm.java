@@ -26,7 +26,7 @@ public class ManualArm extends CommandBase {
   @Override
   public void execute(){
     double x = operator.getRawAxis(Constants.armUp);
-    arm.Move(-x);
+    arm.Move(x);
   }
 
   // Called once the command ends or is interrupted.

@@ -74,7 +74,6 @@ public class RobotContainer {
     releaseCube = new ReleaseCube(clamp);
     manualClamp = new ManualClamp(clamp, operator);
     manualArm = new ManualArm(arm, operator);
-    //manualArm = new ManualArm(arm);
     
     // non manual clamp buttons
     clampInConeButton = new JoystickButton(operator, Constants.clampConeIn);
@@ -88,8 +87,8 @@ public class RobotContainer {
     arm.setDefaultCommand(manualArm);
 
     // auto
-    autoDrive = new AutoDrive(driveTrain,4);
-    autoRaiseArm = new AutoRaiseArm(arm,2);
+    autoDrive = new AutoDrive(driveTrain,2);
+    autoRaiseArm = new AutoRaiseArm(arm,3);
     // ex parallelCommand = new ParallelCommandGroup(autoDrive, autoRaiseArm);
     autonomous = new SequentialCommandGroup(autoDrive, autoRaiseArm);
 
@@ -121,7 +120,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     /* autonomous idea: push cube in lower shelf, back up while flipping arm, and possibly
     make it to charging station */  
-    return autoDrive;
-    //return autonomous;
+    //return autoDrive;
+    return autonomous;
+    //return autoRaiseArm;
   }
 }

@@ -22,16 +22,13 @@ public class ManualClamp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    double x = operator.getRawAxis(Constants.clampIn);
-    double x2 = operator.getRawAxis(Constants.clampOut);
-    clamp.Move(x-x2);
+    double x = operator.getRawAxis(Constants.manualClamp);
+    clamp.Move(x);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted){
-    clamp.Move(0);
-  }
+  public void end(boolean interrupted){}
 
   // Returns true when the command should end.
   @Override
