@@ -54,7 +54,7 @@ public class ManualArm extends CommandBase {
     }
     // otherwise arm moves like normal
     else{
-      arm.Move(x*.5);
+      arm.Move(x*.75);
       hasMoved = true;
     }
   }

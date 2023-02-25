@@ -10,6 +10,7 @@ package frc.robot;
  */
 
 public final class Constants {
+  // buttons
   // driver buttons
   public static final int forward = 3;
   public static final int backward = 2;

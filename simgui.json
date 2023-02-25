@@ -18,7 +18,8 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
-      "/LiveWindow/Ungrouped/Victor[0]": "Motor Controller"
+      "/LiveWindow/Ungrouped/Victor[0]": "Motor Controller",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }
   },
   "NetworkTables": {

@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
@@ -29,12 +30,17 @@ public class DriveTrain extends SubsystemBase {
     //grouping
     left = new MotorControllerGroup(frontLeft, backLeft);
     right = new MotorControllerGroup(frontRight, backRight);
+    left.setInverted(true);
 
     drive = new DifferentialDrive(left, right);
+
+
   }
 
   public void Drive(double x, double z){
-    drive.arcadeDrive(z, x);
+    drive.arcadeDrive(x,-z);
+    SmartDashboard.putNumber("drive x", x);
+    SmartDashboard.putNumber("drive z", z);
   }
 
   @Override
