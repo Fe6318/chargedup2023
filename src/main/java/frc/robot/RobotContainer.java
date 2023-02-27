@@ -63,6 +63,7 @@ public class RobotContainer {
   private static ClampCube clampCube;
   private static ReleaseCone releaseCone;
   private static ReleaseCube releaseCube;
+  // drive
   // drive auto 1 
   private static AutoDrive R1driveBack1;
   private static AutoDrive R1driveForward1;
@@ -71,23 +72,54 @@ public class RobotContainer {
   private static AutoDrive R1driveForward2;
   private static AutoDriveTurn R1turnRight1;
   private static AutoDrive R1driveForward3;
+  // drive auto 2
+  private static AutoDrive R2driveBack1;
+  private static AutoDrive R2driveForward1;
+  private static AutoDrive R2driveBack2;
+  private static AutoDriveTurn R2turnRight1;
+  private static AutoDrive R2driveForward2;
+  private static AutoDriveTurn R2turnLeft1;
+  private static AutoDrive R2driveForward3;
+  // drive auto 3
+  private static AutoDrive R3driveBack1;
+  private static AutoDrive R3driveForward1;
+  private static AutoDrive R3driveBack2;
+  private static AutoDrive R3driveForward2;
+  // drive auto 4
+  private static AutoDrive R4driveBack1;
+  private static AutoDrive R4driveForward1;
+  private static AutoDrive R4driveBack2;
   
   // arm auto 1
   private static AutoRaiseArm R1armUp1;
   private static AutoLowerArm R1armDown1;
-  
-  
-  // grouped commands for auto
+  // arm auto 2
+  private static AutoRaiseArm R2armUp1;
+  private static AutoLowerArm R2armDown1;
+  // arm auto 3
+  private static AutoRaiseArm R3armUp1;
+  private static AutoLowerArm R3armDown1;
+  // arm auto 4
+  private static AutoRaiseArm R4armUp1;
+  private static AutoLowerArm R4armDown1;
+
+  // grouped commands for auto 1
   private final SequentialCommandGroup autonomous1;
-  //private final SequentialCommandGroup autonomous2;
-  //private final SequentialCommandGroup autonomous3;
-  //private final SequentialCommandGroup autonomous4;
   private static ParallelCommandGroup R1backAndArm1;
+  // grouped commands for auto 2
+  private final SequentialCommandGroup autonomous2;
+  private static ParallelCommandGroup R2backAndArm1;
+  // grouped commands for auto 3
+  private final SequentialCommandGroup autonomous3;
+  private static ParallelCommandGroup R3backAndArm1;
+  // grouped commands for auto 4
+  private final SequentialCommandGroup autonomous4;
+  private static ParallelCommandGroup R4backAndArm1;
 
   
 
   // to test gyro auto
-  private final AutoDriveTurn autonomous5;
+  private final AutoDriveTurn test;
 
   // navX MXP using SPI
   private static AHRS gyro;
@@ -134,27 +166,27 @@ public class RobotContainer {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     // route #1
     /* lift arm to release cube and drive back, push cube into space, retreat back, turn 90 degrees, 
-    drive onto charging station */
+    drive forward, turn 90 degrees, drive forward onto charging station */
 
-    // drive back command 
+    // drive back command (combine with arm)
     R1driveBack1 = new AutoDrive(driveTrain, 2, -.5, 0, gyro);
-    // raise arm command
+    // raise arm command (combine with drive back)
     R1armUp1 = new AutoRaiseArm(arm, 2);
-    // back and arm up at same time
+    // back and arm up at same time (realeases cube)
     R1backAndArm1 = new ParallelCommandGroup(R1driveBack1, R1armUp1);
-    // arm lower slowly
+    // arm lower slowly (bring arm back down to push cube in)
     R1armDown1 = new AutoLowerArm(arm, 1);
-    // drive forward 
+    // drive forward (pushes cube in)
     R1driveForward1 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
-    // straight back
+    // straight back (get out of community)
     R1driveBack2 = new AutoDrive(driveTrain, 3, -.5, 0, gyro);
-    // turn 90 degrees
+    // turn 90 degrees (turn toward charging station)
     R1turnLeft1 = new AutoDriveTurn(driveTrain, -90, gyro);
-    // drive forward
+    // drive forward (drive to be in front of charging station)
     R1driveForward2 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
-    // turn right
+    // turn 90 degrees (turn to face charging station)
     R1turnRight1 = new AutoDriveTurn(driveTrain, 90, gyro);
-    // drive forward
+    // drive forward (drive onto charging station)
     R1driveForward3 = new AutoDrive(driveTrain, 3, .5, 0, gyro);
 
     // final auto command
@@ -162,35 +194,85 @@ public class RobotContainer {
     R1turnLeft1, R1driveForward2, R1turnRight1, R1driveForward3);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // route #2
-    /* raise arm to drop cube and drive back, drop arm, push cube into space, retreat back to charging 
-    station attempting to dock and not balance and also lowering the clamp at the same time */
+    /* drive back and open arm to release cube, drive forward to push cube in, drive back, turn 90 degrees,
+    drive forward, turn 90 degrees, drive onto charging station */
+
+    // drive back command (combine with arm)
+    R2driveBack1 = new AutoDrive(driveTrain, 2, -.5, 0, gyro);
+    // raise arm command (combine with drive back)
+    R2armUp1 = new AutoRaiseArm(arm, 2);
+    // back and arm up at same time (realeases cube)
+    R2backAndArm1 = new ParallelCommandGroup(R2driveBack1, R2armUp1);
+    // arm lower slowly (bring arm back down to push cube in)
+    R2armDown1 = new AutoLowerArm(arm, 1);
+    // drive forward (pushes cube in)
+    R2driveForward1 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
+    // straight back (get out of community)
+    R2driveBack2 = new AutoDrive(driveTrain, 3, -.5, 0, gyro);
+    // turn 90 degrees (turn toward charging station)
+    R2turnRight1 = new AutoDriveTurn(driveTrain, 90, gyro);
+    // drive forward (drive to be in front of charging station)
+    R2driveForward2 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
+    // turn 90 degrees (turn to face charging station)
+    R2turnLeft1 = new AutoDriveTurn(driveTrain, -90, gyro);
+    // drive forward (drive onto charging station)
+    R2driveForward3 = new AutoDrive(driveTrain, 3, .5, 0, gyro);
 
     // final auto command
-    //autonomous2 = new SequentialCommandGroup(null);
+    autonomous2 = new SequentialCommandGroup(R2backAndArm1, R2armDown1, R2driveForward1, R2driveBack2,
+    R2turnRight1, R2driveForward2, R2turnLeft1, R2driveForward3);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // route #3
     /* raise arm to release cube and drive back, push cube into space, drive back over charging 
-    station while lowering clamp, then drive forward to dock on station and not balance */
+    station, then drive forward to dock on station */
+    
+    // drive back (combine with arm)
+    R3driveBack1 = new AutoDrive(driveTrain, 2, -.5, 0, gyro);
+    // raise arm command (combine with drive back)
+    R3armUp1 = new AutoRaiseArm(arm, 2);
+    // back and arm up at same time (to release cube)
+    R3backAndArm1 = new ParallelCommandGroup(R3driveBack1, R3armUp1);
+    // lower arm (to be able to push cube in)
+    R3armDown1 = new AutoLowerArm(arm, 2);
+    // drive forward (push cube in)
+    R3driveForward1 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
+    // drive back (drive over charging station to get out of community area)
+    R3driveBack2 = new AutoDrive(driveTrain, 4, -.5, 0, gyro);
+    // drive forward (onto charging station)
+    R3driveForward2 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
 
     // final auto command
-    //autonomous3 = new SequentialCommandGroup(null);
+    autonomous3 = new SequentialCommandGroup(R3backAndArm1, R3armDown1, R3driveForward1, R3driveBack2, 
+    R3driveForward2);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // route #4
-    /* raise arm to release cube and back up, lower arm, push cube into space, retreat back, rotate left, move back, rotate right, 
-    drive back and lower clamp, rotate left, drive onto charging station */
+    /* open arm and back up, lower arm, drive forward, drive backward */
+
+    // drive back (combine with arm)
+    R4driveBack1 = new AutoDrive(driveTrain, 2, -.5, 0, gyro);
+    // raise arm command (combine with drive back)
+    R4armUp1 = new AutoRaiseArm(arm, 2);
+    // back and arm up at the same time (to release cube)
+    R4backAndArm1 = new ParallelCommandGroup(R4driveBack1, R4armUp1);
+    // lower arm
+    R4armDown1 = new AutoLowerArm(arm, 2);
+    // drive forward (to push cone in)
+    R4driveForward1 = new AutoDrive(driveTrain, 2, .5, 0, gyro);
+    // drive back (to get out of community)
+    R4driveBack2 = new AutoDrive(driveTrain, 4, -.5, 0, gyro);
 
     // final auto command
-    //autonomous4 = new SequentialCommandGroup(null);
+    autonomous4 = new SequentialCommandGroup(R4backAndArm1, R4armDown1, R4driveForward1, R4driveBack2);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // route 5
-    autonomous5 = new AutoDriveTurn(driveTrain, 90, gyro);
+    test = new AutoDriveTurn(driveTrain, 90, gyro);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // add commands to the autonomous command chooser
     m_chooser.setDefaultOption("route #1", autonomous1);
-    //m_chooser.addOption("route #2", autonomous2);
-    //m_chooser.addOption("route #3", autonomous3);
-    //m_chooser.addOption("route #4", autonomous4);
-    m_chooser.addOption("route #5", autonomous5);
+    m_chooser.addOption("route #2", autonomous2);
+    m_chooser.addOption("route #3", autonomous3);
+    m_chooser.addOption("route #4", autonomous4);
+    m_chooser.addOption("route #5", test);
 
     // put the chooser on the dashboard
     SmartDashboard.putData(m_chooser);
@@ -221,22 +303,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // possible points: 14 (up to 18 if charging station engaged)
-    // positions: Red 1, Blue 3
-    //return autonomous1;
-
-    // possible points: 11 (up to 15 if charging station engaged)
-    // positions: Red 2, Blue 2
-    //return autonomous2;
-
-    // possible points: 14 (up to 18 if charging station engaged)
-    // positions: Red 2, Blue 2 
-    //return autonomous3;
-    
-    // possible points: 14 (up to 18 if charging station engaged)
-    // positions: Red 3, Blue 1
-    //return autonomous4;
-
     return m_chooser.getSelected();
 
   }
