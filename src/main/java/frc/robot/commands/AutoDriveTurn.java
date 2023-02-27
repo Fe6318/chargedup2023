@@ -13,7 +13,6 @@ public class AutoDriveTurn extends CommandBase{
   private double kP = 0.0125;
   private double kI = 0;
   private double kD = 0.0025;
-  private double error;
   private PIDController turnPID;
   
   public AutoDriveTurn(DriveTrain driveTrain, double angle, Gyro gyro){
@@ -21,9 +20,9 @@ public class AutoDriveTurn extends CommandBase{
     this.angle = angle;
     this.gyro = gyro;
     addRequirements(driveTrain);
-    error = 0;
     turnPID = new PIDController(kP, kI, kD);
-
+    SmartDashboard.putNumber("turn kp", kP);
+    SmartDashboard.putNumber("turn kd", kD);
   }
 
   // Called when the command is initially scheduled.
@@ -38,12 +37,10 @@ public class AutoDriveTurn extends CommandBase{
     turnPID.enableContinuousInput(180,180);
     turnPID.setTolerance(3,5);
 
-    SmartDashboard.putNumber("turn kp", kP);
     kP = SmartDashboard.getNumber("turn kP", 0);
+    kD = SmartDashboard.getNumber("turn kD", 0);
     
-    error = angle - gyro.getAngle();
     driveTrain.Drive(0, turnPID.calculate(gyro.getAngle(), angle));
-    SmartDashboard.putNumber("auto drive error", error);
   }
 
   // Called once the command ends or is interrupted.

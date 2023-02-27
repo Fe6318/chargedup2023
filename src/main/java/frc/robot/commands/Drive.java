@@ -28,7 +28,8 @@ public class Drive extends CommandBase {
 
     // cubing z to make turns less jarring
     double z2 = Math.pow(z, 3);
-    driveTrain.Drive((x-x2),z2);
+    z2 = z2 * .8;
+    driveTrain.Drive(((x-x2) * .9) ,z2);
   }
 
   // Called once the command ends or is interrupted.
