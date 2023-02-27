@@ -33,14 +33,11 @@ public class DriveTrain extends SubsystemBase {
     left.setInverted(true);
 
     drive = new DifferentialDrive(left, right);
-
-
   }
 
   public void Drive(double x, double z){
     drive.arcadeDrive(x,-z);
-    SmartDashboard.putNumber("drive x", x);
-    SmartDashboard.putNumber("drive z", z);
+    
   }
 
   @Override
