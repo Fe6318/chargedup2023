@@ -89,6 +89,8 @@ public class RobotContainer {
   private static AutoDrive R4driveBack1;
   private static AutoDrive R4driveForward1;
   private static AutoDrive R4driveBack2;
+  // drive auto 4
+  private static AutoDrive R5driveForward1;
   
   // arm auto 1
   private static AutoRaiseArm R1armUp1;
@@ -102,6 +104,9 @@ public class RobotContainer {
   // arm auto 4
   private static AutoRaiseArm R4armUp1;
   private static AutoLowerArm R4armDown1;
+  // arm auto 4
+  private static AutoRaiseArm R5armUp1;
+  private static AutoLowerArm R5armDown1;
 
   // grouped commands for auto 1
   private final SequentialCommandGroup autonomous1;
@@ -115,9 +120,10 @@ public class RobotContainer {
   // grouped commands for auto 4
   private final SequentialCommandGroup autonomous4;
   private static ParallelCommandGroup R4backAndArm1;
-
+  // grouped commands for auto 5
+  private final SequentialCommandGroup autonomous5;
+  private static ParallelCommandGroup R5forwardAndArm1;
   
-
   // to test gyro auto
   private final AutoDriveTurn test;
 
@@ -264,7 +270,22 @@ public class RobotContainer {
     // final auto command
     autonomous4 = new SequentialCommandGroup(R4backAndArm1, R4armDown1, R4driveForward1, R4driveBack2);
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    // route 5
+    // route # 5
+    /* drive forward and raise arm to lower clamp */
+    
+    // drive forward (combine with arm)
+    R5driveForward1 = new AutoDrive(driveTrain, 3, .5, 0, gyro);
+    // arm up (combine with drive)
+    R5armUp1 = new AutoRaiseArm(arm, 2);
+    // drive forward and arm up
+    R5forwardAndArm1 = new ParallelCommandGroup(R5driveForward1, R5armUp1)
+    // lower arm
+    R5armDown1 = new AutoLowerArm(arm, 2);
+
+    // final auto command
+    autonomous5 = new SequentialCommandGroup(R5forwardAndArm1, R5armDown1);
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // test route
     test = new AutoDriveTurn(driveTrain, 90, gyro);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // add commands to the autonomous command chooser
@@ -272,7 +293,8 @@ public class RobotContainer {
     m_chooser.addOption("route #2", autonomous2);
     m_chooser.addOption("route #3", autonomous3);
     m_chooser.addOption("route #4", autonomous4);
-    m_chooser.addOption("route #5", test);
+    m_chooser.addOption("route #5", autonomous5);
+    m_chooser.addOption("test", test);
 
     // put the chooser on the dashboard
     SmartDashboard.putData(m_chooser);
