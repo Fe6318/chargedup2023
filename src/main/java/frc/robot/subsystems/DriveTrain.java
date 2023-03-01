@@ -37,8 +37,8 @@ public class DriveTrain extends SubsystemBase {
 
   public void Drive(double x, double z){
     drive.arcadeDrive(x,-z);
-    SmartDashboard.putNumber("z", z);
-    SmartDashboard.putNumber("x", x);
+    //SmartDashboard.putNumber("z", z);
+    //SmartDashboard.putNumber("x", x);
   }
 
   @Override

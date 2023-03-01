@@ -278,7 +278,7 @@ public class RobotContainer {
     // arm up (combine with drive)
     R5armUp1 = new AutoRaiseArm(arm, 2);
     // drive forward and arm up
-    R5forwardAndArm1 = new ParallelCommandGroup(R5driveForward1, R5armUp1)
+    R5forwardAndArm1 = new ParallelCommandGroup(R5driveForward1, R5armUp1);
     // lower arm
     R5armDown1 = new AutoLowerArm(arm, 2);
 

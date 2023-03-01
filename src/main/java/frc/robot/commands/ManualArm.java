@@ -30,9 +30,9 @@ public class ManualArm extends CommandBase {
   @Override
   public void execute(){
     double x = operator.getRawAxis(Constants.armUp);
-    SmartDashboard.putNumber("operator", x);
-    SmartDashboard.putNumber("timer", timer.get());
-    SmartDashboard.putBoolean("boolean", hasMoved);
+    //SmartDashboard.putNumber("operator", x);
+    //SmartDashboard.putNumber("timer", timer.get());
+    //SmartDashboard.putBoolean("boolean", hasMoved);
     // if trigger pressed
     if(x < .1){
       // check if trigger moved
