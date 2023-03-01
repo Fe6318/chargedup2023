@@ -138,6 +138,7 @@ public class RobotContainer {
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
     Shuffleboard.getTab("gyro").add(gyro);
+    SmartDashboard.putBoolean("gyro connected", gyro.isConnected());
     
     // controllers
     driver = new Joystick(0);
