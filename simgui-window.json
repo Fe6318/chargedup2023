@@ -1,6 +1,10 @@
 {
+  "Docking": {
+    "Data": []
+  },
   "MainWindow": {
     "GLOBAL": {
+      "fps": "120",
       "height": "829",
       "maximized": "1",
       "style": "0",

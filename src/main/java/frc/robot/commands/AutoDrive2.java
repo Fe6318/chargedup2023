@@ -1,35 +1,37 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class Drive extends CommandBase {
+public class AutoDrive2 extends CommandBase {
+  private Timer timer;
+  private double time;
   private DriveTrain driveTrain;
-  private Joystick driver;
+  private double speed;
+  private double angle;
   
-  public Drive(DriveTrain driveTrain, Joystick driver){
+  public AutoDrive2(DriveTrain driveTrain, double time, double speed, double angle){
     this.driveTrain = driveTrain;
+    this.time = time;
+    this.speed = speed;
+    this.angle = angle;
+    timer = new Timer();
     addRequirements(driveTrain);
-    this.driver = driver;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize(){}
+  public void initialize(){
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    double x = driver.getRawAxis(Constants.forward);
-    double x2 = driver.getRawAxis(Constants.backward);
-    double z = driver.getRawAxis(Constants.turn);
-
-    // cubing z to make turns less jarring
-    double z2 = Math.pow(z, 3);
-    z2 = z2 * .65;
-    driveTrain.Drive(((x-x2) * .85) ,z2);
+    driveTrain.Drive(speed, angle);
   }
 
   // Called once the command ends or is interrupted.
@@ -41,7 +43,9 @@ public class Drive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(timer.get() > time){
+      return true;
+    }
     return false;
   }
 }
-

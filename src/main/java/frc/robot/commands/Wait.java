@@ -2,16 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
 
-public class AutoRaiseArm extends CommandBase {
-  private Arm arm;
-  private Timer timer;
-  private double time;
-
-  public AutoRaiseArm(Arm arm, double time) {
-    this.arm = arm;
-    addRequirements(arm);
+public class Wait extends CommandBase {
+  private static Timer timer;
+  private static double time;
+  public Wait(double time){
     this.time = time;
     timer = new Timer();
   }
@@ -25,15 +20,11 @@ public class AutoRaiseArm extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute(){
-    arm.Move(.65);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted){
-    arm.Move(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

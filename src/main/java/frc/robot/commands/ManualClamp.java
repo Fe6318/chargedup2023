@@ -23,7 +23,7 @@ public class ManualClamp extends CommandBase {
   @Override
   public void execute(){
     double x = operator.getRawAxis(Constants.manualClamp);
-    clamp.Move(x);
+    clamp.Move(-x);
   }
 
   // Called once the command ends or is interrupted.

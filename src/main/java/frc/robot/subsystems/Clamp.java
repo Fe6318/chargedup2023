@@ -9,6 +9,7 @@ public class Clamp extends SubsystemBase {
   public Clamp(){
     //clampMotor = new TalonSRX(11);
     clampMotor = new WPI_TalonSRX(11);
+    clampMotor.setInverted(true);
   }
 
   public void Move(double speed){

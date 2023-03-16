@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutoDrive2;
 import frc.robot.commands.AutoDriveTurn;
 import frc.robot.commands.AutoLowerArm;
 import frc.robot.commands.AutoRaiseArm;
@@ -10,6 +11,7 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ManualArm;
 import frc.robot.commands.ManualClamp;
 import frc.robot.commands.ReleaseCube;
+import frc.robot.commands.Wait;
 import frc.robot.commands.ReleaseCone;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Clamp;
@@ -91,6 +93,12 @@ public class RobotContainer {
   private static AutoDrive R4driveBack2;
   // drive auto 4
   private static AutoDrive R5driveForward1;
+  // drive auto 6
+  private static AutoDrive2 R6forward1;
+  // drive auto 7
+  private static AutoDrive2 R7back1;
+  private static AutoDrive2 R7forward1;
+  private static AutoDrive2 R7back2;
   
   // arm auto 1
   private static AutoRaiseArm R1armUp1;
@@ -107,6 +115,16 @@ public class RobotContainer {
   // arm auto 4
   private static AutoRaiseArm R5armUp1;
   private static AutoLowerArm R5armDown1;
+  // arm auto 6
+  private static AutoRaiseArm R6armUp1;
+  private static AutoLowerArm R6armDown1;
+  // arm auto 7
+  private static AutoRaiseArm R7armUp1;
+  private static AutoLowerArm R7armDown1;
+  private static AutoRaiseArm R7armUp2;
+  private static AutoLowerArm R7armDown2;
+  // wait auto 
+  private static Wait wait;
 
   // grouped commands for auto 1
   private final SequentialCommandGroup autonomous1;
@@ -123,6 +141,13 @@ public class RobotContainer {
   // grouped commands for auto 5
   private final SequentialCommandGroup autonomous5;
   private static ParallelCommandGroup R5forwardAndArm1;
+  // grouped commands for auto 6
+  private final ParallelCommandGroup autonomous6;
+  private static SequentialCommandGroup R6armMovement;
+  // grouped commands for auto 7
+  private final SequentialCommandGroup autonomous7;
+  private static ParallelCommandGroup R7backArmUp1;
+  private static ParallelCommandGroup R7backArmUp2;
   
   // to test gyro auto
   private final AutoDriveTurn test;
@@ -285,6 +310,46 @@ public class RobotContainer {
     // final auto command
     autonomous5 = new SequentialCommandGroup(R5forwardAndArm1, R5armDown1);
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    // auto 6 no gyro
+    /* drive forward and lower clamp*/
+    // forward
+    R6forward1 = new AutoDrive2(driveTrain, 3.5, .6, 0);
+    // arm up
+    R6armUp1 = new AutoRaiseArm(arm, 2);
+    // arm down
+    R6armDown1 = new AutoLowerArm(arm, 2);
+    // arm up and down
+    R6armMovement = new SequentialCommandGroup(R6armUp1, R6armDown1);
+
+    // final auto command
+    autonomous6 = new ParallelCommandGroup(R6forward1, R6armMovement);
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // auto 7 no gyro
+
+    // back up
+    R7back1 = new AutoDrive2(driveTrain, 1.5, -.5, 0);
+    // arm up
+    R7armUp1 = new AutoRaiseArm(arm, 1);
+    // back and arm
+    R7backArmUp1 = new ParallelCommandGroup(R7back1, R7armUp1);
+    // arm down
+    R7armDown1 = new AutoLowerArm(arm, 1);
+    // forward
+    R7forward1 = new AutoDrive2(driveTrain, 2, .5, 0);
+    // wait 
+    wait = new Wait(2);
+    //back
+    R7back2 = new AutoDrive2(driveTrain, 3.5, -.6, 0);
+    // arm up
+    R7armUp2 = new AutoRaiseArm(arm, 1);
+    // second back and arm
+    R7backArmUp2 = new ParallelCommandGroup(R7back2, R7armUp2);
+    // arm back down
+    R7armDown2 = new AutoLowerArm(arm, 1);
+
+    // final auto command
+    autonomous7 = new SequentialCommandGroup(R7backArmUp1, R7armDown1, R7forward1, wait, R7backArmUp2, R7armDown2);
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     // test route
     test = new AutoDriveTurn(driveTrain, 90, gyro);
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,6 +359,8 @@ public class RobotContainer {
     m_chooser.addOption("route #3", autonomous3);
     m_chooser.addOption("route #4", autonomous4);
     m_chooser.addOption("route #5", autonomous5);
+    m_chooser.addOption("route #6", autonomous6);
+    m_chooser.addOption("route #7", autonomous7);
     m_chooser.addOption("test", test);
 
     // put the chooser on the dashboard
